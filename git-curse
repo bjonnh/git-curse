@@ -1,0 +1,34 @@
+#!/usr/bin/env sh
+
+usage() {
+    echo "usage: git curse"
+    echo
+    echo "Create a commit message with cursing"
+    echo "Based on https://adamcod.es/2013/07/12/how-to-create-git-plugin.html"
+}
+
+version() {
+    echo "git-curse git plugin v0.0.1"
+    echo
+}
+
+random() {
+   echo $@ | tr \  \\n | shuf -n 1
+}
+
+insult() {
+    NOUNS="programming code writing idea"
+    ADJECTIVE="poor lame shitty fucked-up stinky"
+    SOME="random-generator markov-bot"
+    echo Your $(random $NOUNS) is so $(random $ADJECTIVE) even a $(random $SOME) would do better.
+}
+
+main() {
+    if [ "$#" -gt 1 ]; then
+        usage; exit 1
+    fi
+
+    git commit -m "$(insult)"
+}
+
+main "$@"
